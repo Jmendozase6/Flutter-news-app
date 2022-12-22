@@ -36,6 +36,7 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   http: ^0.13.5
   provider: ^6.0.5
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -67,13 +68,13 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/roboto/Poppins-Black.ttf
-        - asset: assets/fonts/roboto/Poppins-Bold.ttf
-        - asset: assets/fonts/roboto/Poppins-Italic.ttf
-        - asset: assets/fonts/roboto/Poppins-Light.ttf
-        - asset: assets/fonts/roboto/Poppins-Medium.ttf
-        - asset: assets/fonts/roboto/Poppins-Regular.ttf
-        - asset: assets/fonts/roboto/Poppins-Thin.ttf
+        - asset: assets/fonts/poppins/Poppins-Black.ttf
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+        - asset: assets/fonts/poppins/Poppins-Italic.ttf
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/poppins/Poppins-Thin.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

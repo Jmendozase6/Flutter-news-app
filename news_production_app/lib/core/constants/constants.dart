@@ -23,3 +23,4 @@ const String subtitleThirdSplash =
     'Get The Last And Updated\nNews Easily With Us';
 
 const String headlinesNews = 'Titulares';
+const String splashScreenTitle = 'Choose A Country\nTo Start Reading';
