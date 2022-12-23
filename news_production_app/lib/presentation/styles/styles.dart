@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_production_app/core/constants/constants.dart' as constants;
 
-TextStyle getTitleStyle() {
+TextStyle getTitleStyle({double? fontSize}) {
   return TextStyle(
     // color: ThemeColor.bodyText,
     fontWeight: FontWeight.w600,
-    fontSize: 27.sp,
+    fontSize: fontSize ?? 27.sp,
     height: 1.5,
   );
 }

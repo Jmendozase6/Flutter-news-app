@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:news_production_app/data/models/Sort.dart';
 import 'package:news_production_app/data/models/models.dart';
 
 const String _urlNews = 'https://newsapi.org/v2';
-const String _apiKey = '9fb0f826564741d6baa70755ee32c98b';
+// const String _originalApiKey = '9fb0f826564741d6baa70755ee32c98b'; // DO NOT MODIFIED
+const String _originalApiKey = 'dfec246bd80c47ba991bad03187e7fca';
 
 class NewsProvider extends ChangeNotifier {
   // List Save headlines
   List<Article> headlines = [];
+  List<Article> byQuery = [];
   String _selectedCategory = 'general';
   String _selectedCountry = 'us';
+  String _selectedFilter = 'publishedAt';
 
   bool _isLoading = true;
   Map<String, List<Article>?>? categoryArticles = {};
@@ -21,7 +25,6 @@ class NewsProvider extends ChangeNotifier {
       categoryArticles![item.name] = [];
     }
     getArticlesByCategory();
-    print(_selectedCategory);
   }
 
   // Categories list
@@ -35,6 +38,13 @@ class NewsProvider extends ChangeNotifier {
     Category(FontAwesomeIcons.memory, 'technology'),
   ];
 
+  // Sorts list
+  List<Sort> filters = [
+    Sort(FontAwesomeIcons.clock, 'publishedAt'),
+    Sort(FontAwesomeIcons.star, 'relevancy'),
+    Sort(FontAwesomeIcons.fire, 'popularity'),
+  ];
+
   bool get isLoading => _isLoading;
 
   List<Article> get getArticlesSelectedCategory =>
@@ -43,14 +53,15 @@ class NewsProvider extends ChangeNotifier {
   getTopHeadlines() async {
     headlines = [];
     final url =
-        '$_urlNews/top-headlines?apiKey=$_apiKey&country=$_selectedCountry';
+        '$_urlNews/top-headlines?apiKey=$_originalApiKey&country=$_selectedCountry';
     final resp = await http.get(Uri.parse(url));
-    if (resp.statusCode == 200) {
-      final newsResponse = newsResponseFromJson(resp.body);
-      headlines.addAll(newsResponse.articles);
-    }
-
+    print(url);
+    // if (resp.statusCode == 200) {
+    final newsResponse = newsResponseFromJson(resp.body);
+    headlines.addAll(newsResponse.articles);
     notifyListeners();
+    // return;
+    // }
   }
 
   getArticlesByCategory() async {
@@ -61,15 +72,28 @@ class NewsProvider extends ChangeNotifier {
     }
 
     final url =
-        '$_urlNews/top-headlines?apiKey=$_apiKey&country=$_selectedCountry&category=$_selectedCategory';
+        '$_urlNews/top-headlines?apiKey=$_originalApiKey&country=$_selectedCountry&category=$_selectedCategory';
     final resp = await http.get(Uri.parse(url));
 
-    if (resp.statusCode == 200) {
-      final newsResponse = newsResponseFromJson(resp.body);
-      categoryArticles![_selectedCategory]!.addAll(newsResponse.articles);
-      _isLoading = false;
-      notifyListeners();
-    }
+    // if (resp.statusCode == 200) {
+    final newsResponse = newsResponseFromJson(resp.body);
+    categoryArticles![_selectedCategory]!.addAll(newsResponse.articles);
+    _isLoading = false;
+    notifyListeners();
+    // }
+  }
+
+  getArticlesByQuery(String query) async {
+    byQuery = [];
+    final url = '$_urlNews/everything?apiKey=$_originalApiKey&q=$query';
+    final resp = await http.get(Uri.parse(url));
+
+    // if (resp.statusCode == 200) {
+    final newsResponse = newsResponseFromJson(resp.body);
+    byQuery.addAll(newsResponse.articles);
+    notifyListeners();
+    // return;
+    // }
   }
 
   set selectedCategory(String valor) {
@@ -86,6 +110,16 @@ class NewsProvider extends ChangeNotifier {
       categoryArticles![item.name] = [];
     }
     getArticlesByCategory();
+    notifyListeners();
+  }
+
+  set selectedFilter(String valor) {
+    _selectedFilter = valor;
+    // getTopHeadlines();
+    // for (var item in categories) {
+    //   categoryArticles![item.name] = [];
+    // }
+    // getArticlesByCategory();
     notifyListeners();
   }
 }

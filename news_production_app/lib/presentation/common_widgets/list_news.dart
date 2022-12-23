@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_production_app/core/constants/constants.dart';
 import 'package:news_production_app/data/models/models.dart';
+import 'package:news_production_app/presentation/screens/details_screen/details_screen.dart';
 import 'package:news_production_app/presentation/styles/styles.dart' as styles;
 
 class ListNews extends StatelessWidget {
@@ -33,10 +34,10 @@ class CardArticle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => print('${article!.author}'),
-      // onTap: () => Navigator.restorablePushNamed(
-      //     context, DetailsScreen.routeName,
-      //     arguments: {'article': article}),
+      onTap: () {
+        Navigator.pushNamed(context, DetailsScreen.routeName,
+            arguments: article);
+      },
       child: Container(
         width: 320.w,
         margin: const EdgeInsets.only(right: 10),
@@ -44,7 +45,7 @@ class CardArticle extends StatelessWidget {
         child: Stack(
           children: [
             _CardImage(urlToImage: article.urlToImage ?? ''),
-            _CardAuthor(autor: article.author ?? 'NO AUTHOR'),
+            _CardAuthor(autor: article.author.toString()),
             _CardTitle(title: article.title),
             _CardGeneralInfo(
                 name: article.source.name, publishedAt: article.publishedAt),

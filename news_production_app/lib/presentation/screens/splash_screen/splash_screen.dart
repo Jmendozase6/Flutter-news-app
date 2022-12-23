@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_production_app/presentation/screens/screens.dart';
 
 import 'package:news_production_app/presentation/screens/splash_screen/widgets/custom_bottom.dart';
 import 'package:news_production_app/presentation/screens/splash_screen/widgets/list_countries.dart';
@@ -28,7 +29,12 @@ class SplashScreen extends StatelessWidget {
               ScreenUtil().setVerticalSpacing(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [CustomButton()],
+                children: [
+                  CustomButton(
+                    function: () => Navigator.pushNamedAndRemoveUntil(
+                        context, HomeScreen.routeName, (route) => false),
+                  ),
+                ],
               ),
             ],
           ),

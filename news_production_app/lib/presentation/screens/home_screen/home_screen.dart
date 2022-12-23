@@ -3,6 +3,7 @@ import 'package:news_production_app/data/data_providers/data_providers.dart';
 import 'package:news_production_app/data/models/models.dart';
 import 'package:news_production_app/presentation/common_widgets/list_news.dart';
 import 'package:news_production_app/presentation/screens/home_screen/widgets/list_categories.dart';
+import 'package:news_production_app/presentation/screens/home_screen/widgets/list_filters.dart';
 import 'package:news_production_app/presentation/screens/home_screen/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final countryProvider = Provider.of<CountryProvider>(context);
+
     final List<Article> listNews = Provider.of<NewsProvider>(context).headlines;
     final List<Article> listNewsCategory =
         Provider.of<NewsProvider>(context).getArticlesSelectedCategory;
@@ -45,6 +47,7 @@ class HomeScreen extends StatelessWidget {
                 const SearchBar(),
                 ScreenUtil().setVerticalSpacing(10),
                 Text('Titulares', style: styles.getTitleStyle()),
+                const ListFilters(), // TODO: REHACER ESTO Y MANDAR LA FUNCIÓN QUE CORRESPONDA
                 ScreenUtil().setVerticalSpacing(10),
                 ListNews(listNews: listNews),
                 ScreenUtil().setVerticalSpacing(20),
