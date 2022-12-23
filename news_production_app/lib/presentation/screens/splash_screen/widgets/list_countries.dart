@@ -7,16 +7,18 @@ import 'package:news_production_app/presentation/screens/splash_screen/widgets/c
 class ListCountries extends StatelessWidget {
   ListCountries({
     Key? key,
+    this.height,
   }) : super(key: key);
 
   final List<Country> countries = Country.dataCountries;
   // final List<Country> countries = [];
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return countries.isEmpty
         ? SizedBox(
-            height: 0.70.sh,
+            height: height ?? 0.70.sh,
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               itemCount: 10,
@@ -24,12 +26,13 @@ class ListCountries extends StatelessWidget {
             ),
           )
         : SizedBox(
-            height: 0.70.sh,
+            height: height ?? 0.70.sh,
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               itemCount: countries.length,
-              itemBuilder: (_, int index) =>
-                  CardCountry(country: countries[index]),
+              itemBuilder: (_, int index) => CardCountry(
+                country: countries[index],
+              ),
             ),
           );
   }

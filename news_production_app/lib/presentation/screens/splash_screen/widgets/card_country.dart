@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_production_app/core/constants/constants.dart' as constants;
-import 'package:news_production_app/data/data_providers/country_provider.dart';
+import 'package:news_production_app/data/data_providers/data_providers.dart';
 import 'package:news_production_app/data/models/models.dart' show Country;
 import 'package:news_production_app/presentation/styles/styles.dart' as styles;
 import 'package:provider/provider.dart';
@@ -16,10 +16,11 @@ class CardCountry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final countryService = Provider.of<CountryProvider>(context);
-
+    final newsService = Provider.of<NewsProvider>(context);
     return GestureDetector(
       onTap: () {
         countryService.selectedCountry = country.name;
+        newsService.selectedCountry = country.iso;
       },
       child: Card(
         shape: const StadiumBorder(),

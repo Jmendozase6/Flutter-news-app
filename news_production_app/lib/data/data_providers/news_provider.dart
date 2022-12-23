@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_production_app/data/models/models.dart';
 
@@ -8,16 +9,83 @@ const String _apiKey = '9fb0f826564741d6baa70755ee32c98b';
 class NewsProvider extends ChangeNotifier {
   // List Save headlines
   List<Article> headlines = [];
-  final String _selectedCategory = 'business';
+  String _selectedCategory = 'general';
+  String _selectedCountry = 'us';
+
+  bool _isLoading = true;
+  Map<String, List<Article>?>? categoryArticles = {};
+
+  NewsProvider() {
+    getTopHeadlines();
+    for (var item in categories) {
+      categoryArticles![item.name] = [];
+    }
+    getArticlesByCategory();
+    print(_selectedCategory);
+  }
 
   // Categories list
   List<Category> categories = [
+    Category(FontAwesomeIcons.addressCard, 'general'),
     Category(FontAwesomeIcons.building, 'business'),
     Category(FontAwesomeIcons.tv, 'entertainment'),
-    Category(FontAwesomeIcons.addressCard, 'general'),
     Category(FontAwesomeIcons.headSideVirus, 'health'),
     Category(FontAwesomeIcons.vials, 'science'),
     Category(FontAwesomeIcons.volleyball, 'sports'),
     Category(FontAwesomeIcons.memory, 'technology'),
   ];
+
+  bool get isLoading => _isLoading;
+
+  List<Article> get getArticlesSelectedCategory =>
+      categoryArticles![_selectedCategory]!;
+
+  getTopHeadlines() async {
+    headlines = [];
+    final url =
+        '$_urlNews/top-headlines?apiKey=$_apiKey&country=$_selectedCountry';
+    final resp = await http.get(Uri.parse(url));
+    if (resp.statusCode == 200) {
+      final newsResponse = newsResponseFromJson(resp.body);
+      headlines.addAll(newsResponse.articles);
+    }
+
+    notifyListeners();
+  }
+
+  getArticlesByCategory() async {
+    if (categoryArticles![_selectedCategory]!.isNotEmpty) {
+      _isLoading = false;
+      notifyListeners();
+      return categoryArticles![_selectedCategory];
+    }
+
+    final url =
+        '$_urlNews/top-headlines?apiKey=$_apiKey&country=$_selectedCountry&category=$_selectedCategory';
+    final resp = await http.get(Uri.parse(url));
+
+    if (resp.statusCode == 200) {
+      final newsResponse = newsResponseFromJson(resp.body);
+      categoryArticles![_selectedCategory]!.addAll(newsResponse.articles);
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  set selectedCategory(String valor) {
+    _selectedCategory = valor;
+    _isLoading = true;
+    getArticlesByCategory();
+    notifyListeners();
+  }
+
+  set selectedCountry(String valor) {
+    _selectedCountry = valor;
+    getTopHeadlines();
+    for (var item in categories) {
+      categoryArticles![item.name] = [];
+    }
+    getArticlesByCategory();
+    notifyListeners();
+  }
 }
