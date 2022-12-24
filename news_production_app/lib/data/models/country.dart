@@ -7,7 +7,7 @@ class Country {
 
   static List<Country> dataCountries = [
     Country('🇺🇸', 'Estados Unidos', 'us'),
-    Country('🇦🇪', 'Emiratos Árabes Unidos', 'ae'),
+    // Country('🇦🇪', 'Emiratos Árabes Unidos', 'ae'),
     Country('🇲🇽', 'México', 'mx'),
     Country('🇦🇷', 'Argentina', 'ar'),
     Country('🇦🇹', 'Austria', 'at'),

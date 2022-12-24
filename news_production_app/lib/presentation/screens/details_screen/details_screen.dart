@@ -56,7 +56,7 @@ class _ContentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 0.67.sh,
+      height: 0.8.sh,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

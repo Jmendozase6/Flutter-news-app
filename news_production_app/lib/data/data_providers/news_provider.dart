@@ -54,14 +54,14 @@ class NewsProvider extends ChangeNotifier {
     headlines = [];
     final url =
         '$_urlNews/top-headlines?apiKey=$_originalApiKey&country=$_selectedCountry';
+    print(_selectedCategory);
     final resp = await http.get(Uri.parse(url));
-    print('CÓDIGO 1: ${resp.statusCode}');
-    // if (resp.statusCode == 200) {
-    final newsResponse = newsResponseFromJson(resp.body);
-    headlines.addAll(newsResponse.articles);
-    notifyListeners();
-    // return;
-    // }
+    if (resp.statusCode == 200) {
+      final newsResponse = newsResponseFromJson(resp.body);
+      headlines.addAll(newsResponse.articles);
+      notifyListeners();
+      // return;
+    }
   }
 
   getArticlesByCategory() async {
