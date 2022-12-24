@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_production_app/data/data_providers/filter_provider.dart';
-import 'package:news_production_app/data/models/Sort.dart';
+import 'package:news_production_app/data/models/sort.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_production_app/core/constants/constants.dart' as constants;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_production_app/data/models/Sort.dart';
+import 'package:news_production_app/data/models/sort.dart';
 import 'package:news_production_app/data/models/models.dart';
 
 const String _urlNews = 'https://newsapi.org/v2';
@@ -75,13 +75,12 @@ class NewsProvider extends ChangeNotifier {
         '$_urlNews/top-headlines?apiKey=$_originalApiKey&country=$_selectedCountry&category=$_selectedCategory';
     final resp = await http.get(Uri.parse(url));
 
-    // if (resp.statusCode == 200) {
-    print('CÓDIGO 2: ${resp.statusCode}');
-    final newsResponse = newsResponseFromJson(resp.body);
-    categoryArticles![_selectedCategory]!.addAll(newsResponse.articles);
-    _isLoading = false;
-    notifyListeners();
-    // }
+    if (resp.statusCode == 200) {
+      final newsResponse = newsResponseFromJson(resp.body);
+      categoryArticles![_selectedCategory]!.addAll(newsResponse.articles);
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   getArticlesByQuery(String query) async {
@@ -89,12 +88,11 @@ class NewsProvider extends ChangeNotifier {
     final url = '$_urlNews/everything?apiKey=$_originalApiKey&q=$query';
     final resp = await http.get(Uri.parse(url));
 
-    // if (resp.statusCode == 200) {
-    final newsResponse = newsResponseFromJson(resp.body);
-    byQuery.addAll(newsResponse.articles);
-    notifyListeners();
-    // return;
-    // }
+    if (resp.statusCode == 200) {
+      final newsResponse = newsResponseFromJson(resp.body);
+      byQuery.addAll(newsResponse.articles);
+      notifyListeners();
+    }
   }
 
   set selectedCategory(String valor) {
