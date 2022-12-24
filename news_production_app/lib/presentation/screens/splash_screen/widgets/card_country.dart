@@ -16,11 +16,11 @@ class CardCountry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final countryService = Provider.of<CountryProvider>(context);
-    final newsService = Provider.of<NewsProvider>(context);
+    final newsProvider = Provider.of<NewsProvider>(context);
     return GestureDetector(
       onTap: () {
         countryService.selectedCountry = country.name;
-        newsService.selectedCountry = country.iso;
+        newsProvider.selectedCountry = country.iso;
       },
       child: Card(
         shape: const StadiumBorder(),

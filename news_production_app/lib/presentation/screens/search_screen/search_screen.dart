@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_production_app/core/constants/constants.dart';
 import 'package:news_production_app/data/data_providers/data_providers.dart';
+import 'package:news_production_app/presentation/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 import 'package:news_production_app/data/models/article.dart';
@@ -33,34 +34,52 @@ class SearchScreen extends StatelessWidget {
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         itemCount: news.length,
-                        itemBuilder: (_, index) => Card(
-                          child: ListTile(
-                            tileColor: componentColor,
-                            leading: FadeInImage(
-                              placeholder:
-                                  const AssetImage('assets/images/giphy.gif'),
-                              image: NetworkImage(news[index].urlToImage ?? ''),
-                              fit: BoxFit.cover,
-                              imageErrorBuilder: (_, __, ___) => const Image(
-                                image: AssetImage('assets/images/no-image.png'),
-                              ),
-                            ),
-                            title: Text(
-                              news[index].title,
-                              style: styles.getTitleStyle(fontSize: 13),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: Text('${news[index].publishedAt}',
-                                style: styles.getsubTitleStyle()),
-                          ),
-                        ),
+                        itemBuilder: (_, index) =>
+                            _CardResult(article: news[index]),
                         separatorBuilder: (_, __) => const Divider(),
                       ),
                     ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CardResult extends StatelessWidget {
+  const _CardResult({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final Article article;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        onTap: () {
+          Navigator.pushNamed(context, DetailsScreen.routeName,
+              arguments: article);
+        },
+        tileColor: componentColor,
+        leading: FadeInImage(
+          placeholder: const AssetImage('assets/images/giphy.gif'),
+          image: NetworkImage(article.urlToImage ?? ''),
+          fit: BoxFit.cover,
+          imageErrorBuilder: (_, __, ___) => const Image(
+            image: AssetImage('assets/images/no-image.png'),
+          ),
+        ),
+        title: Text(
+          article.title,
+          style: styles.getTitleStyle(fontSize: 13),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle:
+            Text('${article.publishedAt}', style: styles.getsubTitleStyle()),
       ),
     );
   }

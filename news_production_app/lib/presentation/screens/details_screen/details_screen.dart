@@ -56,7 +56,7 @@ class _ContentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 600.h,
+      height: 0.67.sh,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -65,6 +65,8 @@ class _ContentCard extends StatelessWidget {
           Text(article.content ?? '', textAlign: TextAlign.justify),
           ScreenUtil().setVerticalSpacing(20),
           Text('${article.publishedAt}'),
+          ScreenUtil().setVerticalSpacing(20),
+          _FadeImage(urlToImage: article.urlToImage),
           ScreenUtil().setVerticalSpacing(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -156,12 +158,30 @@ class _DetailImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return _TransparentImage(
       article: article,
+      child: _FadeImage(urlToImage: article.urlToImage),
+    );
+  }
+}
+
+class _FadeImage extends StatelessWidget {
+  const _FadeImage({
+    Key? key,
+    required this.urlToImage,
+  }) : super(key: key);
+
+  final String? urlToImage;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20.r),
       child: FadeInImage(
         placeholder: const AssetImage('assets/images/giphy.gif'),
-        image: NetworkImage(article.urlToImage ?? ''),
+        image: NetworkImage(urlToImage ?? ''),
         fit: BoxFit.cover,
         imageErrorBuilder: (_, __, ___) => const Image(
           image: AssetImage('assets/images/no-image.png'),
+          fit: BoxFit.cover,
         ),
       ),
     );

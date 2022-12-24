@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_production_app/logic/user_preferences.dart';
 import 'package:news_production_app/presentation/screens/screens.dart';
 
 import 'package:news_production_app/presentation/screens/splash_screen/widgets/custom_bottom.dart';
@@ -31,8 +32,11 @@ class SplashScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomButton(
-                    function: () => Navigator.pushNamedAndRemoveUntil(
-                        context, HomeScreen.routeName, (route) => false),
+                    function: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, HomeScreen.routeName, (route) => false);
+                      UserPreferences.isShowedSplash = true;
+                    },
                   ),
                 ],
               ),

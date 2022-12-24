@@ -3,7 +3,6 @@ import 'package:news_production_app/data/data_providers/data_providers.dart';
 import 'package:news_production_app/data/models/models.dart';
 import 'package:news_production_app/presentation/common_widgets/list_news.dart';
 import 'package:news_production_app/presentation/screens/home_screen/widgets/list_categories.dart';
-import 'package:news_production_app/presentation/screens/home_screen/widgets/list_filters.dart';
 import 'package:news_production_app/presentation/screens/home_screen/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -42,12 +41,11 @@ class HomeScreen extends StatelessWidget {
                   'Está viendo noticias de ${countryProvider.selectedCountry}.',
                   style: styles.getsubTitleStyle(),
                 ),
-                ScreenUtil().setVerticalSpacing(20),
+                ScreenUtil().setVerticalSpacing(10),
                 // Search Bar
                 const SearchBar(),
                 ScreenUtil().setVerticalSpacing(10),
                 Text('Titulares', style: styles.getTitleStyle()),
-                const ListFilters(), // TODO: REHACER ESTO Y MANDAR LA FUNCIÓN QUE CORRESPONDA
                 ScreenUtil().setVerticalSpacing(10),
                 ListNews(listNews: listNews),
                 ScreenUtil().setVerticalSpacing(20),

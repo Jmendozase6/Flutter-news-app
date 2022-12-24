@@ -55,7 +55,7 @@ class NewsProvider extends ChangeNotifier {
     final url =
         '$_urlNews/top-headlines?apiKey=$_originalApiKey&country=$_selectedCountry';
     final resp = await http.get(Uri.parse(url));
-    print(url);
+    print('CÓDIGO 1: ${resp.statusCode}');
     // if (resp.statusCode == 200) {
     final newsResponse = newsResponseFromJson(resp.body);
     headlines.addAll(newsResponse.articles);
@@ -76,6 +76,7 @@ class NewsProvider extends ChangeNotifier {
     final resp = await http.get(Uri.parse(url));
 
     // if (resp.statusCode == 200) {
+    print('CÓDIGO 2: ${resp.statusCode}');
     final newsResponse = newsResponseFromJson(resp.body);
     categoryArticles![_selectedCategory]!.addAll(newsResponse.articles);
     _isLoading = false;

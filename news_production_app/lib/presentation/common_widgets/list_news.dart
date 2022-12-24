@@ -45,7 +45,7 @@ class CardArticle extends StatelessWidget {
         child: Stack(
           children: [
             _CardImage(urlToImage: article.urlToImage ?? ''),
-            _CardAuthor(autor: article.author.toString()),
+            _CardAuthor(autor: article.author),
             _CardTitle(title: article.title),
             _CardGeneralInfo(
                 name: article.source.name, publishedAt: article.publishedAt),
@@ -69,7 +69,7 @@ class _CardGeneralInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 220,
+      top: 230,
       left: 10.w,
       right: 10.w,
       child: SizedBox(
@@ -111,10 +111,10 @@ class _CardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 185.h,
+      top: 195.h,
       left: 20.w,
       child: SizedBox(
-        width: 260,
+        width: 240,
         child: Text(
           title,
           maxLines: 2,
@@ -129,21 +129,25 @@ class _CardTitle extends StatelessWidget {
 class _CardAuthor extends StatelessWidget {
   const _CardAuthor({
     Key? key,
-    required this.autor,
+    this.autor,
   }) : super(key: key);
 
-  final String autor;
+  final String? autor;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 165.h,
+      top: 170.h,
       left: 20.w,
-      child: Text(
-        autor,
-        style: styles.getsubTitleStyle(
-          color: titleColor.withOpacity(0.5),
-          weight: FontWeight.w600,
+      child: SizedBox(
+        width: 260,
+        child: Text(
+          autor ?? 'NO AUTHOR',
+          style: styles.getsubTitleStyle(
+            color: titleColor.withOpacity(0.5),
+            weight: FontWeight.w600,
+          ),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
